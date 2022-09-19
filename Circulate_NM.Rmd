@@ -1,0 +1,396 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(dplyr)
+library(survival)
+library(survminer)
+library(coxphf)
+```
+
+# DFS analysis
+
+## pre-op all stages
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/pre-op"))
+cir_data<-read.csv("pre-op.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## post-op all stages
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/post-op"))
+cir_data<-read.csv("post-op.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## post-op stage II-III
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/post-op"))
+cir_data<-read.csv("post-opII-III.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## post-op stage I
+
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/post-op"))
+cir_data<-read.csv("post-opstageI.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## post-op stage II
+
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/post-op"))
+cir_data<-read.csv("post-opstageII.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## post-op stage III
+
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/post-op"))
+cir_data<-read.csv("post-opstageIII.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## post-op stage IV
+
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/DFS analysis/post-op"))
+cir_data<-read.csv("post-opstageIV.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+# Multivariate analysis for recurrence all stage II-III
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Multivariate analysis"))
+cir_data<-read.csv("MVAII-III.csv")
+cir_data$sex <- as.factor(cir_data$sex)
+cir_data$age1 <- as.factor(cir_data$age1)
+cir_data$PS <- as.factor(cir_data$PS)
+cir_data$pT <- as.factor(cir_data$pT)
+cir_data$pN <- as.factor(cir_data$pN)
+cir_data$MSS <- as.factor(cir_data$MSS)
+cir_data$BRAF <- as.factor(cir_data$BRAF)
+cir_data$RAS <- as.factor(cir_data$RAS)
+surv_object <- Surv(time = cir_data$DFS, event = cir_data$Event)
+cox_fit <- coxph(surv_object ~ ctDNA + sex + age1 + PS + pT + pN + MSS + BRAF + RAS, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+test.ph <- cox.zph(cox_fit)
+test.ph
+```
+
+# Multivariate analysis for recurrence ctDNApos 4 weeks stage II-IV
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Multivariate analysis"))
+cir_data<-read.csv("MVA2ACT.csv")
+cir_data$sex <- as.factor(cir_data$sex)
+cir_data$age1 <- as.factor(cir_data$age1)
+cir_data$PS <- as.factor(cir_data$PS)
+cir_data$Stage <- as.factor(cir_data$Stage)
+cir_data$MSS <- as.factor(cir_data$MSS)
+cir_data$BRAF <- as.factor(cir_data$BRAF)
+cir_data$RAS <- as.factor(cir_data$RAS)
+cir_data$ACT <- as.factor(cir_data$ACT)
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cir_data$age1 = relevel(cir_data$age1, ref = "1")
+cir_data$PS = relevel(cir_data$PS, ref = "1")
+cir_data$MSS = relevel(cir_data$MSS, ref = "MSS")
+surv_object <- Surv(time = cir_data$DFS, event = cir_data$Event)
+cox_fit <- coxph(surv_object ~ ACT + sex + age1 + PS + Stage + MSS + BRAF + RAS, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+test.ph <- cox.zph(cox_fit)
+test.ph
+```
+
+# 4-12 wks Dynamics analysis
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Dynamics analysis"))
+wks_data<-read.csv("4-12wks.csv")
+surv_object_wrs<-Surv(time = wks_data$DFS, event = wks_data$Event)
+KM_curve_wks <- survfit(surv_object_wrs ~ strata(ctDNA_dynamics), data = wks_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve_wks, data = wks_data, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve_wks, times= c(0,6,12,18,21,24))
+myplot<-ggsurvplot(KM_curve_wks, data = wks_data, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(3,24))
+myplot$plot <- myplot$plot + scale_x_continuous(breaks = c(3,9,15),labels = c(3,9,15))
+myplot
+```
+
+## 4-12 wks posnegtonegpos
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Dynamics analysis"))
+cir_data<-read.csv("pntonp.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA_dynamics, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA_dynamics, data=cir_data)
+cir_data$ctDNA_dynamics = relevel(cir_data$ctDNA_dynamics, ref = "Positive>Negative")
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## 4-12 wks posnegtonegneg
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Dynamics analysis"))
+cir_data<-read.csv("pntonn.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA_dynamics, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA_dynamics, data=cir_data)
+
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## 4-12 wks posnegtopospos
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Dynamics analysis"))
+cir_data<-read.csv("pntopp.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA_dynamics, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA_dynamics, data=cir_data)
+cir_data$ctDNA_dynamics = relevel(cir_data$ctDNA_dynamics, ref = "Positive>Negative")
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## 4-12 wks negnegtonegpos
+
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/Dynamics analysis"))
+cir_data<-read.csv("nntonp.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ctDNA_dynamics, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cox_fit <- coxph(surv_object ~ ctDNA_dynamics, data=cir_data)
+
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+
+# DFS post-op ctDNA pos ACT vs noACT (with 2m filter)
+## highrisk stage II
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("highriskIIpos.csv")
+cir_data$DFS=cir_data$DFS-2
+cir_data <- cir_data[cir_data$DFS>=0,]
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(0,24))
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(formula=surv_object~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## stage III
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("stageIIIpos.csv")
+cir_data$DFS=cir_data$DFS-2
+cir_data <- cir_data[cir_data$DFS>=0,]
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(0,24))
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(surv_object ~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## stage IV
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("stageIVpos.csv")
+cir_data$DFS=cir_data$DFS-2
+cir_data <- cir_data[cir_data$DFS>=0,]
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(0,24))
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(surv_object ~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## high-risk stage II and III ctDNA neg
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("HighriskII-IIIneg(1).csv")
+cir_data$DFS=cir_data$DFS-2
+cir_data <- cir_data[cir_data$DFS>=0,]
+surv_object <- Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cir_data$MSS <- as.factor(cir_data$MSS)
+cir_data$pStage <- as.factor(cir_data$pStage)
+cir_data$age1 <- as.factor(cir_data$age1)
+cox_fit <- coxph(surv_object ~ ACT + PS + age1 + MSS + pStage, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## high-risk stage II and III ctDNA pos
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("HighII-IIIMRDposnew.csv")
+cir_data$DFS=cir_data$DFS-2
+cir_data <- cir_data[cir_data$DFS>=0,]
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(surv_object ~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+
+# DFS post-op ctDNA pos ACT vs noACT (no filter)
+## highrisk stage II
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("highriskIIpos.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(0,24))
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(formula=surv_object~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+
+## stage III
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("stageIIIpos.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(0,24))
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(surv_object ~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## stage IV
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("stageIVpos.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=3,xlim = c(0,24))
+summary(KM_curve, times= c(0,6,12,18, 21, 24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(surv_object ~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+
+## high-risk stage II and III ctDNA neg
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("HighriskII-IIIneg(1).csv")
+surv_object <- Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cir_data$MSS <- as.factor(cir_data$MSS)
+cir_data$pStage <- as.factor(cir_data$pStage)
+cir_data$age1 <- as.factor(cir_data$age1)
+cox_fit <- coxph(surv_object ~ ACT + PS + age1 + MSS + pStage, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+## high-risk stage II and III ctDNA pos
+```{r}
+setwd (("/Users/ssharma/Downloads/Circulate analysis/Updated data/ACT analysis"))
+cir_data<-read.csv("HighII-IIIMRDposnew.csv")
+surv_object<-Surv(time = cir_data$DFS, event = cir_data$Event)
+KM_curve <- survfit(surv_object ~ ACT, data = cir_data, conf.int=0.95,conf.type="log-log")
+ggsurvplot(KM_curve, data = cir_data, pval = TRUE, conf.int = TRUE,risk.table = TRUE,break.time.by=6)
+summary(KM_curve, times= c(0,6,12,18,21,24))
+cir_data$ACT = relevel(cir_data$ACT, ref = "YES")
+cox_fit <- coxph(surv_object ~ ACT + PS + Gender, data=cir_data)
+ggforest(cox_fit,data = cir_data)
+summary(cox_fit)
+```
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
